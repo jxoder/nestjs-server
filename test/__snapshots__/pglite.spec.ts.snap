@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pglite Query:: SELECT 1 1`] = `
+{
+  "affectedRows": 0,
+  "fields": [
+    {
+      "dataTypeID": 23,
+      "name": "?column?",
+    },
+  ],
+  "rows": [
+    {
+      "?column?": 1,
+    },
+  ],
+}
+`;
