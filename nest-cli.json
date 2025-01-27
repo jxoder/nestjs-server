@@ -1,0 +1,16 @@
+{
+  "monorepo": true,
+  "defaultLibraryPrefix": "@slibs",
+  "projects": {
+    "main-app": {
+      "type": "application",
+      "root": "apps/main-app",
+      "entryFile": "main",
+      "sourceRoot": "apps/main-app/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/main-app/tsconfig.app.json",
+        "webpack": true
+      }
+    }
+  }
+}

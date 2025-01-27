@@ -1,0 +1,8 @@
+{
+  "printWidth": 80,
+  "semi": false,
+  "singleQuote": true,
+  "arrowParens": "avoid",
+  "importOrder": ["^@nestjs/(.*)$", "^@libs/(.*)$"],
+  "plugins": ["prettier-plugin-organize-imports"]
+}
