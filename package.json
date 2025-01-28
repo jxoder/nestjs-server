@@ -14,7 +14,9 @@
     "@nestjs/core": "11.0.5",
     "@nestjs/platform-express": "11.0.5",
     "env-var": "7.5.0",
-    "express": "4.21.2"
+    "express": "4.21.2",
+    "request-ip": "3.3.0",
+    "rxjs": "7.8.1"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.2.16",
@@ -23,6 +25,7 @@
     "@types/express": "5.0.0",
     "@types/jest": "29.5.14",
     "@types/node": "22.10.10",
+    "@types/request-ip": "0.0.41",
     "@types/supertest": "6.0.2",
     "@typescript-eslint/eslint-plugin": "8.21.0",
     "@typescript-eslint/parser": "8.21.0",
