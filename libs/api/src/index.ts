@@ -1,2 +1,2 @@
 export * from './api.module'
-export * from './utils'
+export * from './bootstrap'

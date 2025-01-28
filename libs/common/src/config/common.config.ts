@@ -16,6 +16,6 @@ export const commonConfig = registerAs<ICommonConfig>(
   () => ({
     APP_NAME: get('APP_NAME').default('unknwon').asString(),
     ENV: get('ENV').default('local').asEnum(ENV_CONST),
-    LOG_LEVEL: get('LOG_LEVEL').default('info').asEnum(LOG_LEVEL_CONST),
+    LOG_LEVEL: get('LOG_LEVEL').default('log').asEnum(LOG_LEVEL_CONST),
   }),
 )

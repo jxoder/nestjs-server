@@ -4,10 +4,13 @@ import {
   Module,
   ValidationPipe,
 } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core'
+import { apiConfig } from './config'
 import { HttpExceptionFilter, RouteLoggerInterceptor } from './provider'
 
 @Module({
+  imports: [ConfigModule.forFeature(apiConfig)],
   providers: [
     { provide: APP_FILTER, useClass: HttpExceptionFilter },
     { provide: APP_INTERCEPTOR, useClass: RouteLoggerInterceptor },
