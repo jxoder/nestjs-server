@@ -21,6 +21,12 @@
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@slibs/api": ["libs/api/src"],
+      "@slibs/api/*": ["libs/api/src/*"],
+      "@slibs/common": ["libs/common/src"],
+      "@slibs/common/*": ["libs/common/src/*"]
+    }
   }
 }

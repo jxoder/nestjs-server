@@ -1,15 +1,35 @@
 {
   "monorepo": true,
   "defaultLibraryPrefix": "@slibs",
+  "compilerOptions": {
+    "webpack": true
+  },
   "projects": {
+    "api": {
+      "type": "library",
+      "root": "libs/api",
+      "entryFile": "index",
+      "sourceRoot": "libs/api/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/api/tsconfig.lib.json"
+      }
+    },
+    "common": {
+      "type": "library",
+      "root": "libs/common",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/tsconfig.lib.json"
+      }
+    },
     "main-app": {
       "type": "application",
       "root": "apps/main-app",
       "entryFile": "main",
       "sourceRoot": "apps/main-app/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/main-app/tsconfig.app.json",
-        "webpack": true
+        "tsConfigPath": "apps/main-app/tsconfig.app.json"
       }
     }
   }
