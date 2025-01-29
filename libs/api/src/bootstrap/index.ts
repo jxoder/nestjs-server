@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core'
 import { COMMON_CONFIG_KEY, ICommonConfig } from '@slibs/common'
 import cluster from 'cluster'
 import { Request, Response } from 'express'
+import { cpus } from 'os'
 import { mw } from 'request-ip'
 import { API_CONFIG_KEY, IApiConfig } from '../config'
 import { setupSwagger } from './swagger.setup'
@@ -43,8 +44,9 @@ export class Bootstrap {
   }
 
   async clusterize(nums: number = 2) {
+    const processCount = Math.max(nums, cpus().length)
     if (cluster.isPrimary) {
-      for (let i = 0; i < nums; i++) {
+      for (let i = 0; i < processCount - 1; i++) {
         cluster.fork()
       }
       cluster.on('exit', (worker, _code, _signal) => {
