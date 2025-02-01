@@ -30,5 +30,6 @@
       "@slibs/database": ["libs/database/src"],
       "@slibs/database/*": ["libs/database/src/*"]
     }
-  }
+  },
+  "exclude": ["node_modules", "dist", "eslint.config.ts"]
 }

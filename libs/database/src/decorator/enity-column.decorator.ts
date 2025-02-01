@@ -21,10 +21,10 @@ export const EntityColumn = (options: EntityColumnOptions) => {
   const { primary, exclude, example, ...columnOptions } = options
 
   // exclude decorator
-  if (options?.exclude) decorators.push(Exclude())
+  if (exclude) decorators.push(Exclude())
 
   // set api property options
-  let apiPropertyOptions: ApiPropertyOptions = {}
+  const apiPropertyOptions: ApiPropertyOptions = {}
   if (example) apiPropertyOptions.example = example
   if (options?.comment) apiPropertyOptions.description = options.comment
   if (options?.nullable) apiPropertyOptions.nullable = options.nullable
@@ -34,7 +34,7 @@ export const EntityColumn = (options: EntityColumnOptions) => {
 
   decorators.push(ApiProperty(apiPropertyOptions))
   decorators.push(
-    options?.primary
+    primary
       ? PrimaryColumn(columnOptions as PrimaryColumnOptions)
       : Column(columnOptions),
   )
