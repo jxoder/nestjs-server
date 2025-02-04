@@ -13,7 +13,7 @@ import { TypeORMEntityClassOrSchema } from './types'
 
 @Module({})
 export class DatabaseModule {
-  static forRoot(): DynamicModule {
+  static forRoot(useFactory?: () => DataSourceOptions): DynamicModule {
     initializeTransactionalContext()
 
     return {
@@ -24,6 +24,9 @@ export class DatabaseModule {
         TypeOrmModule.forRootAsync({
           inject: [ConfigService],
           useFactory: (configService: ConfigService) => {
+            if (useFactory) {
+              return useFactory()
+            }
             const config =
               configService.getOrThrow<IDatabaseConfig>(DATABASE_CONFIG_KEY)
             return {

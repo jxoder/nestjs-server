@@ -1,0 +1,17 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "testEnvironment": "node",
+  "rootDir": ".",
+  "roots": ["<rootDir>"],
+  "testMatch": [
+    "<rootDir>/test/**/*.spec.{js,ts}",
+    "<rootDir>/libs/*/test/**/*.spec.{js,ts}"
+  ],
+  "passWithNoTests": true,
+  "transform": {
+    "^.+\\.ts$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "^@slibs/([^/]+)(|/.*)$": "<rootDir>/libs/$1/src/$2"
+  }
+}

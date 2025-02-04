@@ -123,6 +123,9 @@ importers:
       ts-loader:
         specifier: 9.5.2
         version: 9.5.2(typescript@5.7.3)(webpack@5.97.1)
+      typeorm-pglite:
+        specifier: 0.3.2
+        version: 0.3.2(@electric-sql/pglite@0.2.16)
       typescript:
         specifier: 5.7.3
         version: 5.7.3
@@ -3036,6 +3039,11 @@ packages:
     resolution: {integrity: sha512-vPekJXzZOTZrdDvTl1YoM+w+sUIfQHG4kZTpbFYoTsufyv9NIBRe4Q+PdzhEAFA2std3D9LZHEb1EjE9zhRpiQ==}
     peerDependencies:
       typeorm: ^0.2.0 || ^0.3.0
+
+  typeorm-pglite@0.3.2:
+    resolution: {integrity: sha512-/URkIx3MXaRqLKXjGfFY1uq8Fp6qSYTP09NjK6MAbsZhNwe7qAqnaWdTGtJ4aMr2e2TDPXT1rCt+w7xszMUzOg==}
+    peerDependencies:
+      '@electric-sql/pglite': '>= 0.2.12'
 
   typeorm-transactional@0.5.0:
     resolution: {integrity: sha512-53/CwnXpOIJnWU3oVCNbhHB95FwciKSGbY+m/Hw4e2dBM2c4toiOHwf4pmk83Ne7guznmDgVr/5IUfbp+JTPCg==}
@@ -6658,6 +6666,10 @@ snapshots:
   typeorm-naming-strategies@4.1.0(typeorm@0.3.20(pg@8.13.1)):
     dependencies:
       typeorm: 0.3.20(pg@8.13.1)
+
+  typeorm-pglite@0.3.2(@electric-sql/pglite@0.2.16):
+    dependencies:
+      '@electric-sql/pglite': 0.2.16
 
   typeorm-transactional@0.5.0(reflect-metadata@0.2.2)(typeorm@0.3.20(pg@8.13.1)):
     dependencies:
