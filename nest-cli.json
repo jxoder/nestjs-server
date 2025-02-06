@@ -5,6 +5,15 @@
     "webpack": true
   },
   "projects": {
+    "main-app": {
+      "type": "application",
+      "root": "apps/main-app",
+      "entryFile": "main",
+      "sourceRoot": "apps/main-app/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/main-app/tsconfig.app.json"
+      }
+    },
     "api": {
       "type": "library",
       "root": "libs/api",
@@ -32,13 +41,13 @@
         "tsConfigPath": "libs/database/tsconfig.lib.json"
       }
     },
-    "main-app": {
-      "type": "application",
-      "root": "apps/main-app",
-      "entryFile": "main",
-      "sourceRoot": "apps/main-app/src",
+    "user": {
+      "type": "library",
+      "root": "libs/user",
+      "entryFile": "index",
+      "sourceRoot": "libs/user/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/main-app/tsconfig.app.json"
+        "tsConfigPath": "libs/user/tsconfig.lib.json"
       }
     }
   }

@@ -36,6 +36,7 @@ export class DatabaseModule {
               namingStrategy: new SnakeNamingStrategy(),
               autoLoadEntities: true,
               retryAttempts: 3,
+              // logging: true,
             }
           },
           dataSourceFactory: async (options?: DataSourceOptions) => {

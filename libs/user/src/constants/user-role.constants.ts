@@ -1,0 +1,6 @@
+export enum USER_ROLE {
+  ANONYMOUS = 'ANONYMOUS',
+  USER = 'USER',
+  ADMIN = 'ADMIN',
+  MASTER = 'MASTER',
+}

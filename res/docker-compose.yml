@@ -1,6 +1,7 @@
 services:
   postgres:
     image: postgres:17.2
+    container_name: postgres_17_2
     ports:
       - 5432:5432
     volumes:

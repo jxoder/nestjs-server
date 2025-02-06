@@ -28,7 +28,9 @@
       "@slibs/common": ["libs/common/src"],
       "@slibs/common/*": ["libs/common/src/*"],
       "@slibs/database": ["libs/database/src"],
-      "@slibs/database/*": ["libs/database/src/*"]
+      "@slibs/database/*": ["libs/database/src/*"],
+      "@slibs/user": ["libs/user/src"],
+      "@slibs/user/*": ["libs/user/src/*"]
     }
   },
   "exclude": ["node_modules", "dist", "eslint.config.ts"]
