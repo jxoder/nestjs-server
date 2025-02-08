@@ -29,6 +29,8 @@
       "@slibs/common/*": ["libs/common/src/*"],
       "@slibs/database": ["libs/database/src"],
       "@slibs/database/*": ["libs/database/src/*"],
+      "@slibs/testing": ["libs/testing/src"],
+      "@slibs/testing/*": ["libs/testing/src/*"],
       "@slibs/user": ["libs/user/src"],
       "@slibs/user/*": ["libs/user/src/*"]
     }

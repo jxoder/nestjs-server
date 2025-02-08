@@ -41,6 +41,15 @@
         "tsConfigPath": "apps/main-app/tsconfig.app.json"
       }
     },
+    "testing": {
+      "type": "library",
+      "root": "libs/testing",
+      "entryFile": "index",
+      "sourceRoot": "libs/testing/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/testing/tsconfig.lib.json"
+      }
+    },
     "user": {
       "type": "library",
       "root": "libs/user",

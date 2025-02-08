@@ -64,9 +64,6 @@ export class EmailAccountService {
       loggedAt: new Date(),
     })
 
-    return {
-      email: emailAccount.email,
-      userId: emailAccount.userId,
-    }
+    return this.userRepository.findOneByOrFail({ id: emailAccount.userId })
   }
 }

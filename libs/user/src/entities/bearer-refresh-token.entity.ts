@@ -27,6 +27,6 @@ export class BearerRefreshTokenEntity extends AuditableEntity {
   @EntityColumn({ type: 'timestamp', comment: 'expired at', nullable: false })
   expiredAt!: Date
 
-  @EntityColumn({ type: 'timestamp', comment: 'last used at', nullable: false })
-  accessedAt!: Date
+  @EntityColumn({ type: 'timestamp', comment: 'last used at', nullable: true })
+  accessedAt!: Date | null
 }

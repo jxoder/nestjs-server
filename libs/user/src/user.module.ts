@@ -31,5 +31,6 @@ import { EmailAccountService, UserAuthService, UserService } from './service'
     UserService,
     UserAuthService,
   ],
+  exports: [UserService, EmailAccountService, UserAuthService],
 })
 export class UserModule {}

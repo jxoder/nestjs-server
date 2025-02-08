@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "nest start --watch",
     "build": "nest build",
-    "jest": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "jest": "ENV=test node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
     "db": "docker-compose -f res/docker-compose.yml up"
   },
   "dependencies": {
