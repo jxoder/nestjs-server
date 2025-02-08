@@ -3,10 +3,21 @@ import request from 'supertest'
 import { ApiResponse } from './api.response'
 
 export class ApiClient {
+  private token?: string
+
   constructor(protected readonly app: INestApplication) {}
+
+  // if token is null, remove token
+  setToken(token: string | null) {
+    this.token = token ?? undefined
+  }
 
   async get<RESPONSE = any>(path: string) {
     const req = request(this.app.getHttpServer()).get(path)
+
+    if (this.token) {
+      req.set('Authorization', `Bearer ${this.token}`)
+    }
 
     const res = await req
     return new ApiResponse<RESPONSE>(res)
@@ -17,6 +28,10 @@ export class ApiClient {
 
     if (payload) {
       req.send(payload)
+    }
+
+    if (this.token) {
+      req.set('Authorization', `Bearer ${this.token}`)
     }
 
     const res = await req

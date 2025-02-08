@@ -13,6 +13,7 @@ import {
   UserRepository,
 } from './repository'
 import { EmailAccountService, UserAuthService, UserService } from './service'
+import { RefreshTokenStrategy, UserJwtStrategy } from './strategy'
 
 @Module({
   imports: [
@@ -30,6 +31,10 @@ import { EmailAccountService, UserAuthService, UserService } from './service'
     EmailAccountService,
     UserService,
     UserAuthService,
+
+    // strategy
+    UserJwtStrategy,
+    RefreshTokenStrategy,
   ],
   exports: [UserService, EmailAccountService, UserAuthService],
 })

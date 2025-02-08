@@ -29,6 +29,7 @@ export class UserAuthService {
       expiredAt: this.getExpiredAtFromNow(
         this.config.REFRESH_EXPIRES_IN_SECONDS,
       ),
+      accessedAt: DayUtils.getNowDate(),
     })
 
     return this.bearerRefreshTokenRepository.findOneByOrFail({ token })
@@ -44,8 +45,12 @@ export class UserAuthService {
     })
   }
 
-  async validateRefreshToken(entity: BearerRefreshTokenEntity) {
-    return DayUtils.isBeforeNow(entity.expiredAt)
+  async findOneByToken(token: string) {
+    return this.bearerRefreshTokenRepository.findOneBy({ token })
+  }
+
+  validateRefreshToken(entity: BearerRefreshTokenEntity) {
+    return DayUtils.isAfterNow(entity.expiredAt)
   }
 
   async createAccessToken(userId: number) {

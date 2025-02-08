@@ -70,6 +70,8 @@ describe('email-account.service', () => {
       email: 'test@test.com',
       password: 'test',
     })
-    expect(res).toEqual({ email: 'test@test.com', userId: 1 })
+    expect(res).toHaveProperty('id')
+    expect(res).toHaveProperty('name')
+    expect(res).toHaveProperty('role')
   })
 })

@@ -25,3 +25,15 @@ export class LoginResponse extends CommonResponseDto {
     }
   }
 }
+
+export class CreateAccessTokenResponse extends CommonResponseDto {
+  @ApiProperty({ description: 'access token' })
+  accessToken!: string
+
+  static from(accessToken: string): CreateAccessTokenResponse {
+    return {
+      ...OkResponseDto.from(),
+      accessToken,
+    }
+  }
+}

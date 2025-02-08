@@ -26,7 +26,10 @@ export class JWTUtils {
   static verify<T>(token: string, secret: string): Promise<T> {
     return new Promise((resolve, reject) => {
       verify(token, secret, (err, decoded) => {
-        err ? reject(err) : resolve(decoded as T)
+        if (err) {
+          return reject(err)
+        }
+        return resolve(decoded as T)
       })
     })
   }

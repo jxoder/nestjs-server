@@ -1,67 +1,185 @@
 import { HttpStatus } from '@nestjs/common'
-import { ERROR_MESSAGE } from '@slibs/common'
+import { DayUtils, ERROR_MESSAGE, JWTUtils } from '@slibs/common'
+import { ApiClient, tk } from '@slibs/testing'
 import { aa, ba, createClient } from './harness'
 
-describe('auth controller (e2e)', () => {
+/**
+ * EmailAccount Info
+ */
+const EMAIL = 'sample@example.com'
+const PASSWORD = 'password'
+
+/**
+ * Paths
+ */
+const EMAIL_ACCOUNT_SIGN = '/auth/email-account/sign'
+const EMAIL_ACCOUNT_LOGIN = '/auth/email-account/login'
+const SELF_USER = '/v1/users/self'
+const GET_ACCESS_TOKEN = '/auth/refresh-token'
+
+describe('auth (e2e)', () => {
   beforeAll(ba)
   afterAll(aa)
 
-  describe('email-account', () => {
-    const EMAIL = 'sample@example.com'
-    const PASSWORD = 'password'
+  let client: ApiClient
 
-    it('sign with email', async () => {
-      const client = createClient()
+  beforeEach(() => {
+    client = createClient()
+  })
 
-      const r = await client.post('/auth/email-account/sign', {
-        email: EMAIL,
-        password: PASSWORD,
+  describe('email-account.controller', () => {
+    describe('POST /auth/email-account/sign', () => {
+      it('success sign with email', async () => {
+        const r = await client.post(EMAIL_ACCOUNT_SIGN, {
+          email: EMAIL,
+          password: PASSWORD,
+        })
+        r.expectSuccess()
       })
-      r.expectSuccess()
 
-      const e1 = await client.post('/auth/email-account/sign', {
-        email: 'invalid-email-format',
-        password: PASSWORD,
+      it('invalid email format', async () => {
+        const e = await client.post(EMAIL_ACCOUNT_SIGN, {
+          email: 'invalid-email-format',
+          password: PASSWORD,
+        })
+        expect(e.error.code).toBe(HttpStatus.BAD_REQUEST)
       })
-      expect(e1.error.code).toBe(HttpStatus.BAD_REQUEST)
 
-      // duplicate email
-      const e2 = await client.post('/auth/email-account/sign', {
-        email: EMAIL,
-        password: PASSWORD,
+      it('duplicate email', async () => {
+        const e = await client.post(EMAIL_ACCOUNT_SIGN, {
+          email: EMAIL,
+          password: PASSWORD,
+        })
+        expect(e.error.code).toBe(HttpStatus.CONFLICT)
+        expect(e.error.message).toBe(`DUPLICATED_EMAIL_ACCOUNT`)
       })
-      expect(e2.error.code).toBe(HttpStatus.CONFLICT)
-      expect(e2.error.message).toBe(`DUPLICATED_EMAIL_ACCOUNT`)
     })
 
-    it('login with email', async () => {
-      const client = createClient()
-
-      const r = await client.post('/auth/email-account/login', {
-        email: EMAIL,
-        password: PASSWORD,
+    describe('POST /auth/email-account/login', () => {
+      it('success login with email', async () => {
+        const r = await client.post(EMAIL_ACCOUNT_LOGIN, {
+          email: EMAIL,
+          password: PASSWORD,
+        })
+        r.expectSuccess()
+        expect(r.data).toHaveProperty('accessToken')
+        expect(r.data).toHaveProperty('refreshToken')
+        expect(r.data).toHaveProperty('user')
       })
-      r.expectSuccess()
 
-      expect(r.data).toHaveProperty('accessToken')
-      expect(r.data).toHaveProperty('refreshToken')
-      expect(r.data).toHaveProperty('user')
-
-      // invalid password
-      const e1 = await client.post('/auth/email-account/login', {
-        email: EMAIL,
-        password: 'invalid-password',
+      it('invalid password', async () => {
+        const e = await client.post(EMAIL_ACCOUNT_LOGIN, {
+          email: EMAIL,
+          password: 'invalid-password',
+        })
+        expect(e.error.code).toBe(HttpStatus.UNAUTHORIZED)
+        expect(e.error.message).toBe(ERROR_MESSAGE.INVALID_CREDENTIAL)
       })
-      expect(e1.error.code).toBe(HttpStatus.UNAUTHORIZED)
-      expect(e1.error.message).toBe(ERROR_MESSAGE.INVALID_CREDENTIAL)
 
-      // not exist account
-      const e2 = await client.post('/auth/email-account/login', {
-        email: 'no-exist@example.com',
-        password: PASSWORD,
+      it('not exist account', async () => {
+        const e = await client.post(EMAIL_ACCOUNT_LOGIN, {
+          email: 'no-exist@example.com',
+          password: PASSWORD,
+        })
+        expect(e.error.code).toBe(HttpStatus.UNAUTHORIZED)
+        expect(e.error.message).toBe(ERROR_MESSAGE.INVALID_CREDENTIAL)
       })
-      expect(e2.error.code).toBe(HttpStatus.UNAUTHORIZED)
-      expect(e2.error.message).toBe(ERROR_MESSAGE.INVALID_CREDENTIAL)
+    })
+
+    describe('jwt bearer authorized', () => {
+      it('success get self user with access token', async () => {
+        const r = await client.post(EMAIL_ACCOUNT_LOGIN, {
+          email: EMAIL,
+          password: PASSWORD,
+        })
+        r.expectSuccess()
+
+        client.setToken(r.data.accessToken)
+
+        const r1 = await client.get(SELF_USER)
+        r1.expectSuccess()
+        expect(r1.data).toHaveProperty('user')
+      })
+
+      it('unauthorized if no token', async () => {
+        const r = await client.get(SELF_USER)
+        expect(r.error.code).toBe(HttpStatus.UNAUTHORIZED)
+      })
+
+      it('unauthorized if invalid token', async () => {
+        client.setToken('invalid-token')
+        const r = await client.get(SELF_USER)
+        expect(r.error.code).toBe(HttpStatus.UNAUTHORIZED)
+
+        const invalidSecretToken = await JWTUtils.sign(
+          { sub: 1 },
+          { secret: 'invalid-secret' },
+        )
+        client.setToken(invalidSecretToken)
+        const r2 = await client.get(SELF_USER)
+        expect(r2.error.code).toBe(HttpStatus.UNAUTHORIZED)
+      })
+
+      it('unauthorized if expired token', async () => {
+        const r = await client.post(EMAIL_ACCOUNT_LOGIN, {
+          email: EMAIL,
+          password: PASSWORD,
+        })
+        r.expectSuccess()
+
+        client.setToken(r.data.accessToken)
+
+        const r2 = await client.get(SELF_USER)
+        r2.expectSuccess()
+
+        // access token 1days
+        tk.travel(DayUtils.getNow().add(25, 'hours').toDate())
+        const r3 = await client.get(SELF_USER)
+        expect(r3.error.code).toBe(HttpStatus.UNAUTHORIZED)
+      })
+    })
+
+    describe('refresh token authorized', () => {
+      it('success create access token with refresh token', async () => {
+        const r = await client.post(EMAIL_ACCOUNT_LOGIN, {
+          email: EMAIL,
+          password: PASSWORD,
+        })
+        r.expectSuccess()
+        client.setToken(r.data.refreshToken)
+
+        const r2 = await client.post(GET_ACCESS_TOKEN)
+
+        r2.expectSuccess()
+        expect(r2.data).toHaveProperty('accessToken')
+      })
+
+      it('unauthorized if no token', async () => {
+        const r = await client.post(GET_ACCESS_TOKEN)
+        expect(r.error.code).toBe(HttpStatus.UNAUTHORIZED)
+      })
+
+      it('unauthorized if invalid token', async () => {
+        client.setToken('invalid-token')
+        const r = await client.post(GET_ACCESS_TOKEN)
+        expect(r.error.code).toBe(HttpStatus.UNAUTHORIZED)
+      })
+
+      it('unauthorized if expired token', async () => {
+        const r = await client.post(EMAIL_ACCOUNT_LOGIN, {
+          email: EMAIL,
+          password: PASSWORD,
+        })
+        r.expectSuccess()
+        client.setToken(r.data.refreshToken)
+
+        const r1 = await client.post(GET_ACCESS_TOKEN)
+        r1.expectSuccess()
+
+        tk.travel(DayUtils.getNow().add(31, 'days').toDate())
+        const r2 = await client.post(GET_ACCESS_TOKEN)
+        expect(r2.error.code).toBe(HttpStatus.UNAUTHORIZED)
+      })
     })
   })
 })
