@@ -13,7 +13,10 @@ import { TypeORMEntityClassOrSchema } from './types'
 
 @Module({})
 export class DatabaseModule {
-  static forRoot(useFactory?: () => DataSourceOptions): DynamicModule {
+  // database mocking 에 활용할 수 있음.
+  static dataSourceOptions: DataSourceOptions | null = null
+
+  static forRoot(): DynamicModule {
     initializeTransactionalContext()
 
     return {
@@ -24,11 +27,19 @@ export class DatabaseModule {
         TypeOrmModule.forRootAsync({
           inject: [ConfigService],
           useFactory: (configService: ConfigService) => {
-            if (useFactory) {
-              return useFactory()
-            }
             const config =
               configService.getOrThrow<IDatabaseConfig>(DATABASE_CONFIG_KEY)
+
+            if (this.dataSourceOptions) {
+              return {
+                schema: config.SCHEMA,
+                ...this.dataSourceOptions,
+                namingStrategy: new SnakeNamingStrategy(),
+                autoLoadEntities: true,
+                synchronize: true,
+                retryAttempts: 3,
+              }
+            }
             return {
               type: 'postgres',
               url: config.CONNECTION_STRING,

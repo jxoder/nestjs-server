@@ -6,12 +6,19 @@ import {
   ColumnOptions,
   PrimaryColumn,
   PrimaryColumnOptions,
+  PrimaryGeneratedColumn,
 } from 'typeorm'
 
 export type EntityColumnOptions = ColumnOptions & {
   primary?: boolean // is primary column
   exclude?: boolean // is exclude for dto
   example?: any // data example for swagger
+}
+
+function trimComment(options: Record<string, any>) {
+  if (process.env.ENV === 'test' && options?.comment) {
+    delete options.comment
+  }
 }
 
 export const EntityColumn = (options: EntityColumnOptions) => {
@@ -32,6 +39,8 @@ export const EntityColumn = (options: EntityColumnOptions) => {
   if (options?.enum) apiPropertyOptions.enum = Object.values(options.enum)
   if (options?.length) apiPropertyOptions.maxLength = Number(options.length)
 
+  trimComment(columnOptions)
+
   decorators.push(ApiProperty(apiPropertyOptions))
   decorators.push(
     primary
@@ -39,4 +48,24 @@ export const EntityColumn = (options: EntityColumnOptions) => {
       : Column(columnOptions),
   )
   return applyDecorators(...decorators)
+}
+
+export const EntityPrimaryGeneratedColumn = (options: {
+  type: 'int'
+  comment?: string
+  example?: any
+}) => {
+  const { example, ...columnOptions } = options
+
+  const apiPropertyOptions: ApiPropertyOptions = {}
+
+  if (example) apiPropertyOptions.example = example
+  if (options?.comment) apiPropertyOptions.description = options.comment
+
+  trimComment(columnOptions)
+
+  return applyDecorators(
+    ApiProperty(apiPropertyOptions),
+    PrimaryGeneratedColumn(columnOptions),
+  )
 }

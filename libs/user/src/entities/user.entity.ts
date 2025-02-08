@@ -12,6 +12,11 @@ export class UserEntity extends CommonEntity {
   })
   name!: string | null
 
-  @EntityColumn({ type: 'enum', enum: USER_ROLE, nullable: false })
+  @EntityColumn({
+    type: 'enum',
+    enum: USER_ROLE,
+    comment: 'user role',
+    nullable: false,
+  })
   role!: USER_ROLE
 }

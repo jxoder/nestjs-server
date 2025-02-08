@@ -3,7 +3,6 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { CommonModule } from '@slibs/common'
 import { DatabaseModule } from '@slibs/database'
 import { DataSource } from 'typeorm'
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import { PGliteDriver } from 'typeorm-pglite'
 import { TestModule, TestService } from './test.classes'
 
@@ -13,17 +12,13 @@ describe('database.module (mock using pglite)', () => {
   let module: TestingModule
 
   beforeAll(async () => {
+    DatabaseModule.dataSourceOptions = {
+      type: 'postgres',
+      driver: new PGliteDriver({ ...pgLite }).driver,
+    }
+
     module = await Test.createTestingModule({
-      imports: [
-        CommonModule,
-        DatabaseModule.forRoot(() => ({
-          type: 'postgres',
-          driver: new PGliteDriver({ ...pgLite }).driver,
-          namingStrategy: new SnakeNamingStrategy(),
-          autoLoadEntities: true,
-        })),
-        TestModule,
-      ],
+      imports: [CommonModule, DatabaseModule.forRoot(), TestModule],
     }).compile()
 
     await module.get(DataSource).synchronize(true)
