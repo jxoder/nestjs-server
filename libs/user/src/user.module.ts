@@ -1,11 +1,35 @@
 import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
 import { DatabaseModule } from '@slibs/database'
-import { EmailAccountEntity, UserEntity } from './entities'
-import { EmailAccountRepository, UserRepository } from './repository'
-import { EmailAccountService } from './service'
+import { userConfig } from './config'
+import {
+  BearerRefreshTokenEntity,
+  EmailAccountEntity,
+  UserEntity,
+} from './entities'
+import {
+  BearerRefreshTokenRepository,
+  EmailAccountRepository,
+  UserRepository,
+} from './repository'
+import { EmailAccountService, UserAuthService, UserService } from './service'
 
 @Module({
-  imports: [DatabaseModule.forFeature([UserEntity, EmailAccountEntity])],
-  providers: [UserRepository, EmailAccountRepository, EmailAccountService],
+  imports: [
+    ConfigModule.forFeature(userConfig),
+    DatabaseModule.forFeature([
+      UserEntity,
+      EmailAccountEntity,
+      BearerRefreshTokenEntity,
+    ]),
+  ],
+  providers: [
+    UserRepository,
+    EmailAccountRepository,
+    BearerRefreshTokenRepository,
+    EmailAccountService,
+    UserService,
+    UserAuthService,
+  ],
 })
 export class UserModule {}

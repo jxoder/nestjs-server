@@ -3,7 +3,7 @@ import { QueryErrorCatcher } from '../decorator'
 
 export abstract class CommonRepository<ENTITY extends ObjectLiteral, PK_TYPE> {
   constructor(
-    private readonly repository: Repository<ENTITY>,
+    protected readonly repository: Repository<ENTITY>,
     protected readonly pkField: string,
   ) {}
 
@@ -19,6 +19,12 @@ export abstract class CommonRepository<ENTITY extends ObjectLiteral, PK_TYPE> {
     where: Parameters<Repository<ENTITY>['findOneBy']>[0],
   ): Promise<ENTITY | null> {
     return this.repository.findOneBy(where)
+  }
+
+  async findOneByOrFail(
+    where: Parameters<Repository<ENTITY>['findOneByOrFail']>[0],
+  ) {
+    return this.repository.findOneByOrFail(where)
   }
 
   async findBy(
