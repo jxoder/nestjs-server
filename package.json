@@ -6,8 +6,13 @@
   "scripts": {
     "start:dev": "nest start --watch",
     "build": "nest build",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "jest": "ENV=test node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "db": "docker-compose -f res/docker-compose.yml up"
+    "db": "docker-compose -f res/docker-compose.yml up",
+    "migration:new": "pnpm typeorm migration:create migrations/migration",
+    "migration:gen": "pnpm typeorm migration:generate migrations/migration -p -d ormconfig.ts",
+    "migration:run": "pnpm typeorm migration:run -d",
+    "migration:revert": "pnpm typeorm migration:revert -d"
   },
   "dependencies": {
     "@nestjs/common": "11.0.5",
@@ -61,6 +66,7 @@
     "timekeeper": "2.3.1",
     "ts-jest": "29.2.5",
     "ts-loader": "9.5.2",
+    "ts-node": "10.9.2",
     "typeorm-pglite": "0.3.2",
     "typescript": "5.7.3"
   }
