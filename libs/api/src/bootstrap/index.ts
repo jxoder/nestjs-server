@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { COMMON_CONFIG_KEY, ICommonConfig } from '@slibs/common'
 import cluster from 'cluster'
+import compression from 'compression'
 import { Request, Response } from 'express'
 import { cpus } from 'os'
 import { mw } from 'request-ip'
@@ -21,6 +22,17 @@ export class Bootstrap {
     const apiConfig = configService.getOrThrow<IApiConfig>(API_CONFIG_KEY)
 
     app.use(mw())
+    app.use(
+      compression({
+        filter: (req: Request, res: Response) => {
+          if (req.get('x-no-compression') === '1') {
+            return false
+          }
+          return compression.filter(req, res)
+        },
+      }),
+    )
+
     app.use('/favicon.ico', (_: Request, res: Response) => {
       res.status(204).end()
     })
