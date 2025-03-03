@@ -5,6 +5,7 @@ import { ERROR_MESSAGE, JWTUtils } from '@slibs/common'
 import { Request } from 'express'
 import { Strategy } from 'passport-custom'
 import { IUserConfig, USER_CONFIG_KEY } from '../config'
+import { USER_ROLE } from '../constants'
 
 @Injectable()
 export class UserJwtStrategy extends PassportStrategy(Strategy, 'user-jwt') {
@@ -17,7 +18,7 @@ export class UserJwtStrategy extends PassportStrategy(Strategy, 'user-jwt') {
 
     if (!token) throw new UnauthorizedException()
 
-    const parsedToken = await JWTUtils.verify<{ sub: number }>(
+    const parsedToken = await JWTUtils.verify<{ sub: number; role: USER_ROLE }>(
       token,
       this.configService.getOrThrow<IUserConfig>(USER_CONFIG_KEY).JWT_SECRET,
     ).catch(() => null)
@@ -26,6 +27,6 @@ export class UserJwtStrategy extends PassportStrategy(Strategy, 'user-jwt') {
     if (!parsedToken)
       throw new UnauthorizedException(ERROR_MESSAGE.INVALID_JWT_TOKEN)
 
-    return { id: parsedToken.sub }
+    return { id: parsedToken.sub, role: parsedToken.role }
   }
 }

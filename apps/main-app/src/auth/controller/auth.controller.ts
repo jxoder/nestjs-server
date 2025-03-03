@@ -1,6 +1,7 @@
 import { Controller, Post } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import {
+  IReqUser,
   RefreshTokenBeaererAuthorized,
   ReqUser,
   UserAuthService,
@@ -16,8 +17,8 @@ export class AuthController {
   @Post('refresh-token')
   @ApiOperation({ summary: 'get access token with refresh token' })
   @ApiResponse({ type: CreateAccessTokenResponse })
-  async getAccessToken(@ReqUser() reqUser: { id: number }) {
-    const accessToken = await this.userAuthService.createAccessToken(reqUser.id)
+  async getAccessToken(@ReqUser() reqUser: IReqUser) {
+    const accessToken = await this.userAuthService.createAccessToken(reqUser)
     return CreateAccessTokenResponse.from(accessToken)
   }
 }

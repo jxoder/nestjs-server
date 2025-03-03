@@ -31,7 +31,7 @@ export class EmailAccountController {
     const user = await this.emailAccountService.login(body)
     const refreshToken = await this.userAuthService.getRefreshToken(user.id)
     await this.userAuthService.renewRefreshToken(refreshToken)
-    const accessToken = await this.userAuthService.createAccessToken(user.id)
+    const accessToken = await this.userAuthService.createAccessToken(user)
     return LoginResponse.from(user, accessToken, refreshToken.token)
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { DayUtils, JWTUtils, RandomUtils } from '@slibs/common'
 import { IUserConfig, USER_CONFIG_KEY } from '../config'
-import { BearerRefreshTokenEntity } from '../entities'
+import { BearerRefreshTokenEntity, UserEntity } from '../entities'
 import { BearerRefreshTokenRepository } from '../repository'
 
 @Injectable()
@@ -53,9 +53,9 @@ export class UserAuthService {
     return DayUtils.isAfterNow(entity.expiredAt)
   }
 
-  async createAccessToken(userId: number) {
+  async createAccessToken(user: Pick<UserEntity, 'id' | 'role'>) {
     return JWTUtils.sign(
-      { sub: userId },
+      { sub: user.id, role: user.role },
       {
         secret: this.config.JWT_SECRET,
         expiresIn: this.config.JWT_EXPIRES_IN_SECONDS,
