@@ -17,3 +17,29 @@ export class OkResponseDto extends CommonResponseDto {
     }
   }
 }
+
+export class ListResponseDto extends CommonResponseDto {
+  @ApiProperty({ example: 1, description: 'page index' })
+  page!: number
+
+  @ApiProperty({ example: 10, description: 'page size' })
+  size!: number
+
+  @ApiProperty({ example: 10, description: 'total count' })
+  total!: number
+
+  static from<T>(
+    list: T[],
+    total: number,
+    page: number = 1,
+    size: number = 10,
+  ) {
+    return {
+      ...OkResponseDto.from(),
+      list,
+      total,
+      page,
+      size,
+    }
+  }
+}

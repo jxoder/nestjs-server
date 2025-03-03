@@ -73,7 +73,10 @@
     "typescript": "5.7.3"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["@nestjs/core", "@scarf/scarf", "bcrypt"]
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@scarf/scarf",
+      "bcrypt"
+    ]
   }
 }
-  

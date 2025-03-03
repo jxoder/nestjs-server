@@ -29,6 +29,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
       `Method: ${request.method}, Path: ${request.originalUrl}, Code: ${code}, Error: ${message}, IP: ${request.clientIp}`,
     )
 
+    process.env.ENV === 'local' && this.logger.error(exception)
+
     return response.status(code).send({ code, message })
   }
 
