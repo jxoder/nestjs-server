@@ -8,8 +8,7 @@ export default new DataSource({
   database: 'postgres',
   username: 'postgres',
   password: 'postgres',
-  entities: ['libs/**/entities/*.entity.ts'],
   namingStrategy: new SnakeNamingStrategy(),
-  migrationsTableName: `typeorm-migrations`,
-  migrations: ['migrations/*.ts'],
+  migrationsTableName: `local-migrations`,
+  migrations: ['migrations/*/*.ts'],
 })
