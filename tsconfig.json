@@ -38,6 +38,12 @@
       "@slibs/common/*": [
         "libs/common/src/*"
       ],
+      "@slibs/core": [
+        "libs/core/src"
+      ],
+      "@slibs/core/*": [
+        "libs/core/src/*"
+      ],
       "@slibs/database": [
         "libs/database/src"
       ],
