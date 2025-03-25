@@ -6,21 +6,12 @@
   },
   "projects": {
     "api": {
-      "type": "library",
-      "root": "libs/api",
-      "entryFile": "index",
-      "sourceRoot": "libs/api/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/api/tsconfig.lib.json"
-      }
-    },
-    "api-app": {
       "type": "application",
-      "root": "apps/api-app",
+      "root": "apps/api",
       "entryFile": "main",
-      "sourceRoot": "apps/api-app/src",
+      "sourceRoot": "apps/api/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/api-app/tsconfig.app.json"
+        "tsConfigPath": "apps/api/tsconfig.app.json"
       }
     },
     "api-gateway": {

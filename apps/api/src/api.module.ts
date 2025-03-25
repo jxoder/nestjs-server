@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common'
+
 import {
   APP_HTTP_EXCEPTION_FILTER,
   APP_HTTP_LOGGER_INTERCEPTOR,
@@ -7,18 +8,20 @@ import {
 } from '@slibs/core'
 import { DatabaseModule } from '@slibs/database'
 import configure from './config/configure'
-import { HealthController } from './health.controller'
+import { HealthModule } from './health/health.module'
 
 @Module({
   imports: [
     CoreModule.forRoot('api', configure),
     DatabaseModule.forRoot(configure.KEY),
+
+    // In Modules
+    HealthModule,
   ],
   providers: [
     APP_VALIDATE_PIPE,
     APP_HTTP_EXCEPTION_FILTER,
     APP_HTTP_LOGGER_INTERCEPTOR,
   ],
-  controllers: [HealthController],
 })
 export class ApiAppModule {}

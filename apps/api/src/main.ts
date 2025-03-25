@@ -4,7 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import compression from 'compression'
 import { Request, Response } from 'express'
 import { mw } from 'request-ip'
-import { ApiAppModule } from './api-app.module'
+import { ApiAppModule } from './api.module'
 import configure from './config/configure'
 
 async function bootstrap() {
