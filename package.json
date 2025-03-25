@@ -8,7 +8,7 @@
     "build": "nest build",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "jest": "ENV=test node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "db": "docker-compose -f res/docker-compose.yml up",
+    "infra": "docker-compose -f res/docker-compose.yml up",
     "migration:new": "pnpm typeorm migration:create migrations/migration",
     "migration:gen": "pnpm typeorm migration:generate migrations/migration -p -d ormconfig.ts",
     "migration:run": "pnpm typeorm migration:run -d",

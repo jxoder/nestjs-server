@@ -1,5 +1,4 @@
 import { DynamicModule, Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { DataSource, DataSourceOptions } from 'typeorm'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
@@ -8,7 +7,6 @@ import {
   getDataSourceByName,
   initializeTransactionalContext,
 } from 'typeorm-transactional'
-import { DATABASE_CONFIG_KEY, databaseConfig, IDatabaseConfig } from './config'
 import { TypeORMEntityClassOrSchema } from './types'
 
 @Module({})
@@ -16,20 +14,16 @@ export class DatabaseModule {
   // database mocking 에 활용할 수 있음.
   static dataSourceOptions: DataSourceOptions | null = null
 
-  static forRoot(): DynamicModule {
+  static forRoot(configKey: string): DynamicModule {
     initializeTransactionalContext()
 
     return {
       global: true,
       module: this,
       imports: [
-        ConfigModule.forFeature(databaseConfig),
         TypeOrmModule.forRootAsync({
-          inject: [ConfigService],
-          useFactory: (configService: ConfigService) => {
-            const config =
-              configService.getOrThrow<IDatabaseConfig>(DATABASE_CONFIG_KEY)
-
+          inject: [configKey],
+          useFactory: (config: Record<string, any>) => {
             if (this.dataSourceOptions) {
               return {
                 schema: config.SCHEMA,
@@ -40,9 +34,14 @@ export class DatabaseModule {
                 retryAttempts: 3,
               }
             }
+
+            if (!config.DATABASE_URL) {
+              throw new Error('DATABASE_URL is required')
+            }
+
             return {
               type: 'postgres',
-              url: config.CONNECTION_STRING,
+              url: config.DATABASE_URL,
               schema: config.SCHEMA,
               namingStrategy: new SnakeNamingStrategy(),
               autoLoadEntities: true,
