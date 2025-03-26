@@ -49,7 +49,7 @@ export default new DataSource({
 const configFileName = `typeorm.${appName}.config.ts`
 fs.writeFileSync(path.join(process.cwd(), configFileName), configContent)
 
-$`pnpm typeorm migration:generate migrations/${appName}/migration -p -d ${configFileName}`
+$`pnpm typeorm migration:revert -d ${configFileName}`
   .then(() => {
     fs.unlinkSync(path.join(process.cwd(), configFileName))
     console.log('complete')

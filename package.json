@@ -9,10 +9,9 @@
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "jest": "ENV=test node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
     "infra": "docker-compose -f res/docker-compose.yml up",
-    "migration:new": "pnpm typeorm migration:create migrations/migration",
-    "migration:gen": "pnpm typeorm migration:generate migrations/migration -p -d ormconfig.ts",
-    "migration:run": "pnpm typeorm migration:run -d",
-    "migration:revert": "pnpm typeorm migration:revert -d"
+    "migration:gen": "pnpm ts-node scripts/generate-typeorm-migration-schema.script.ts",
+    "migration:run": "pnpm ts-node scripts/run-typeorm-migration-schema.script.ts",
+    "migration:revert": "pnpm ts-node scripts/revert-typeorm-migration-schema.script.ts"
   },
   "dependencies": {
     "@nestjs/common": "11.0.5",
@@ -28,6 +27,7 @@
     "class-validator": "0.14.1",
     "compression": "1.7.5",
     "dayjs": "1.11.13",
+    "dotenv": "16.4.7",
     "env-var": "7.5.0",
     "express": "4.21.2",
     "jsonwebtoken": "9.0.2",
