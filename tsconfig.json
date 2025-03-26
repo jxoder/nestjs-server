@@ -3,7 +3,10 @@
     "baseUrl": "./",
     "target": "es2022",
     "module": "commonjs",
-    "lib": ["es2023", "esnext.asynciterable"],
+    "lib": [
+      "es2023",
+      "esnext.asynciterable"
+    ],
     "strict": true,
     "incremental": true,
     "skipLibCheck": true,
@@ -23,19 +26,53 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "paths": {
-      "@slibs/common": ["libs/common/src"],
-      "@slibs/common/*": ["libs/common/src/*"],
-      "@slibs/core": ["libs/core/src"],
-      "@slibs/core/*": ["libs/core/src/*"],
-      "@slibs/database": ["libs/database/src"],
-      "@slibs/database/*": ["libs/database/src/*"],
-      "@slibs/settings": ["libs/settings/src"],
-      "@slibs/settings/*": ["libs/settings/src/*"],
-      "@slibs/testing": ["libs/testing/src"],
-      "@slibs/testing/*": ["libs/testing/src/*"],
-      "@slibs/user": ["libs/user/src"],
-      "@slibs/user/*": ["libs/user/src/*"]
+      "@slibs/common": [
+        "libs/common/src"
+      ],
+      "@slibs/common/*": [
+        "libs/common/src/*"
+      ],
+      "@slibs/core": [
+        "libs/core/src"
+      ],
+      "@slibs/core/*": [
+        "libs/core/src/*"
+      ],
+      "@slibs/database": [
+        "libs/database/src"
+      ],
+      "@slibs/database/*": [
+        "libs/database/src/*"
+      ],
+      "@slibs/redis": [
+        "libs/redis/src"
+      ],
+      "@slibs/redis/*": [
+        "libs/redis/src/*"
+      ],
+      "@slibs/settings": [
+        "libs/settings/src"
+      ],
+      "@slibs/settings/*": [
+        "libs/settings/src/*"
+      ],
+      "@slibs/testing": [
+        "libs/testing/src"
+      ],
+      "@slibs/testing/*": [
+        "libs/testing/src/*"
+      ],
+      "@slibs/user": [
+        "libs/user/src"
+      ],
+      "@slibs/user/*": [
+        "libs/user/src/*"
+      ]
     }
   },
-  "exclude": ["node_modules", "dist", "eslint.config.ts"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "eslint.config.ts"
+  ]
 }

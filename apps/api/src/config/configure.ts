@@ -21,4 +21,9 @@ export default registerAs('config', () => ({
 
   // Database
   DATABASE_URL: get('DATABASE_URL').required().asString(),
+
+  // Redis
+  REDIS_HOST: get('REDIS_HOST').required().asString(),
+  REDIS_PORT: get('REDIS_PORT').required().asPortNumber(),
+  REDIS_PASSWORD: get('REDIS_PASSWORD').asString(),
 }))
