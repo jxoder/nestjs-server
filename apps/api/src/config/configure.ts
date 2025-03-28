@@ -26,4 +26,7 @@ export default registerAs('config', () => ({
   REDIS_HOST: get('REDIS_HOST').required().asString(),
   REDIS_PORT: get('REDIS_PORT').required().asPortNumber(),
   REDIS_PASSWORD: get('REDIS_PASSWORD').asString(),
+
+  // User
+  USER_JWT_SECRET: get('USER_JWT_SECRET').default('secret').asString(),
 }))

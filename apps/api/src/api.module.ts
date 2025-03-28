@@ -7,6 +7,7 @@ import {
   CoreModule,
 } from '@slibs/core'
 import { DatabaseModule } from '@slibs/database'
+import { RedisModule } from '@slibs/redis'
 import configure from './config/configure'
 import { HealthModule } from './health/health.module'
 
@@ -14,6 +15,7 @@ import { HealthModule } from './health/health.module'
   imports: [
     CoreModule.forRoot('api', configure),
     DatabaseModule.forRoot(configure.KEY),
+    RedisModule.forRoot(configure.KEY),
 
     // In Modules
     HealthModule,
