@@ -1,7 +1,7 @@
-import { registerAs } from '@nestjs/config'
+import { ConfigType as NestConfigType, registerAs } from '@nestjs/config'
 import { get } from 'env-var'
 
-export default registerAs('config', () => ({
+export const configure = registerAs('config', () => ({
   // Basic
   APP_NAME: 'api',
   ENV: get('ENV').default('local').asEnum(['test', 'local', 'dev', 'prod']),
@@ -30,3 +30,6 @@ export default registerAs('config', () => ({
   // User
   USER_JWT_SECRET: get('USER_JWT_SECRET').default('secret').asString(),
 }))
+
+export const configKey = configure.KEY
+export type ConfigType = NestConfigType<typeof configure>

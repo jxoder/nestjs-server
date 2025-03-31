@@ -1,16 +1,16 @@
-import { VersioningType } from '@nestjs/common'
+import { LogLevel, VersioningType } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import compression from 'compression'
 import { Request, Response } from 'express'
 import { mw } from 'request-ip'
 import { ApiAppModule } from './api.module'
-import configure from './config/configure'
+import { configKey, ConfigType } from './config'
 
 async function bootstrap() {
   const app = await NestFactory.create(ApiAppModule)
 
-  const config = app.get(configure.KEY)
+  const config = app.get<ConfigType>(configKey)
 
   app.use(mw())
   app.use(
@@ -27,7 +27,7 @@ async function bootstrap() {
     res.status(204).end()
   })
 
-  app.useLogger([config.LOG_LEVEL])
+  app.useLogger([config.LOG_LEVEL as LogLevel])
   app.enableVersioning({ type: VersioningType.URI })
 
   app.enableCors({

@@ -8,14 +8,14 @@ import {
 } from '@slibs/core'
 import { DatabaseModule } from '@slibs/database'
 import { RedisModule } from '@slibs/redis'
-import configure from './config/configure'
-import { HealthModule } from './health/health.module'
+import { configKey, configure } from './config'
+import { HealthModule } from './health'
 
 @Module({
   imports: [
     CoreModule.forRoot('api', configure),
-    DatabaseModule.forRoot(configure.KEY),
-    RedisModule.forRoot(configure.KEY),
+    DatabaseModule.forRoot(configKey),
+    RedisModule.forRoot(configKey),
 
     // In Modules
     HealthModule,

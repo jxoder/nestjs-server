@@ -32,15 +32,6 @@
         "tsConfigPath": "apps/auth/tsconfig.app.json"
       }
     },
-    "common": {
-      "type": "library",
-      "root": "libs/common",
-      "entryFile": "index",
-      "sourceRoot": "libs/common/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/common/tsconfig.lib.json"
-      }
-    },
     "core": {
       "type": "library",
       "root": "libs/core",
@@ -75,15 +66,6 @@
       "sourceRoot": "libs/redis/src",
       "compilerOptions": {
         "tsConfigPath": "libs/redis/tsconfig.lib.json"
-      }
-    },
-    "settings": {
-      "type": "library",
-      "root": "libs/settings",
-      "entryFile": "index",
-      "sourceRoot": "libs/settings/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/settings/tsconfig.lib.json"
       }
     },
     "testing": {
