@@ -10,6 +10,7 @@ import { DatabaseModule } from '@slibs/database'
 import { RedisModule } from '@slibs/redis'
 import { configKey, configure } from './config'
 import { HealthModule } from './health'
+import { UserModule } from './user'
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { HealthModule } from './health'
 
     // In Modules
     HealthModule,
+    UserModule,
   ],
   providers: [
     APP_VALIDATE_PIPE,

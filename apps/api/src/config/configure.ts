@@ -29,6 +29,12 @@ export const configure = registerAs('config', () => ({
 
   // User
   USER_JWT_SECRET: get('USER_JWT_SECRET').default('secret').asString(),
+  USER_JWT_EXPIRES_IN: get('USER_JWT_EXPIRES_IN')
+    .default(60 * 60) // 1 hour
+    .asIntPositive(),
+  USER_REFRESH_TOKEN_EXPIRES_IN: get('USER_REFRESH_TOKEN_EXPIRES_IN')
+    .default(60 * 60 * 24 * 14) // 14 days
+    .asIntPositive(),
 }))
 
 export const configKey = configure.KEY

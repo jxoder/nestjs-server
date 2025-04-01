@@ -6,6 +6,7 @@ import {
   Logger,
 } from '@nestjs/common'
 import { Request } from 'express'
+import { JsonWebTokenError } from 'jsonwebtoken'
 import { CoreException, EXCEPTION_TYPE } from '../exception'
 
 @Catch()
@@ -38,6 +39,13 @@ export class HTTPExceptionFilter implements ExceptionFilter {
         code: exception.code,
         message: exception.message,
         ctx: exception.ctx,
+      }
+    }
+
+    if (exception instanceof JsonWebTokenError) {
+      return {
+        code: EXCEPTION_TYPE.UNAUTHORIZED,
+        message: EXCEPTION_TYPE[EXCEPTION_TYPE.UNAUTHORIZED],
       }
     }
 

@@ -10,10 +10,10 @@ export class CommonApiResponse {
 }
 
 export class OkResponse extends CommonApiResponse {
-  static from(): OkResponse {
+  static from(message?: string): OkResponse {
     return {
       code: HttpStatus.OK,
-      message: 'OK',
+      message: message ?? 'OK',
     }
   }
 }

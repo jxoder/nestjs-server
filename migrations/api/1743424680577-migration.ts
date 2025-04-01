@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm'
 
-export class Migration1742994043729 implements MigrationInterface {
-  name = 'Migration1742994043729'
+export class Migration1743424680577 implements MigrationInterface {
+  name = 'Migration1743424680577'
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
@@ -12,7 +12,7 @@ export class Migration1742994043729 implements MigrationInterface {
                 "created_at" TIMESTAMP NOT NULL,
                 "updated_at" TIMESTAMP NOT NULL,
                 "id" SERIAL NOT NULL,
-                "name" character varying(40),
+                "name" character varying(20),
                 "role" "public"."user_role_enum" NOT NULL,
                 CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id")
             );
@@ -49,15 +49,15 @@ export class Migration1742994043729 implements MigrationInterface {
             CREATE TABLE "bearer_refresh_token" (
                 "created_at" TIMESTAMP NOT NULL,
                 "updated_at" TIMESTAMP NOT NULL,
-                "key" character varying(36) NOT NULL,
+                "token" character varying(36) NOT NULL,
                 "user_id" integer NOT NULL,
                 "expired_at" TIMESTAMP NOT NULL,
                 "accessed_at" TIMESTAMP,
-                CONSTRAINT "PK_46eb5d2ff6afb91f4e384484bc8" PRIMARY KEY ("key")
+                CONSTRAINT "PK_23be54cd4d2970c1658b06f91fd" PRIMARY KEY ("token")
             );
             COMMENT ON COLUMN "bearer_refresh_token"."created_at" IS 'created at';
             COMMENT ON COLUMN "bearer_refresh_token"."updated_at" IS 'updated at';
-            COMMENT ON COLUMN "bearer_refresh_token"."key" IS 'token (uuid)';
+            COMMENT ON COLUMN "bearer_refresh_token"."token" IS 'token (uuid)';
             COMMENT ON COLUMN "bearer_refresh_token"."user_id" IS 'user id';
             COMMENT ON COLUMN "bearer_refresh_token"."expired_at" IS 'expired at';
             COMMENT ON COLUMN "bearer_refresh_token"."accessed_at" IS 'last used at'
