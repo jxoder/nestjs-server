@@ -14,24 +14,6 @@
         "tsConfigPath": "apps/api/tsconfig.app.json"
       }
     },
-    "api-gateway": {
-      "type": "application",
-      "root": "apps/api-gateway",
-      "entryFile": "main",
-      "sourceRoot": "apps/api-gateway/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
-      }
-    },
-    "auth": {
-      "type": "application",
-      "root": "apps/auth",
-      "entryFile": "main",
-      "sourceRoot": "apps/auth/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/auth/tsconfig.app.json"
-      }
-    },
     "core": {
       "type": "library",
       "root": "libs/core",
@@ -50,15 +32,6 @@
         "tsConfigPath": "libs/database/tsconfig.lib.json"
       }
     },
-    "main-app": {
-      "type": "application",
-      "root": "apps/main-app",
-      "entryFile": "main",
-      "sourceRoot": "apps/main-app/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/main-app/tsconfig.app.json"
-      }
-    },
     "redis": {
       "type": "library",
       "root": "libs/redis",
@@ -75,15 +48,6 @@
       "sourceRoot": "libs/testing/src",
       "compilerOptions": {
         "tsConfigPath": "libs/testing/tsconfig.lib.json"
-      }
-    },
-    "user": {
-      "type": "library",
-      "root": "libs/user",
-      "entryFile": "index",
-      "sourceRoot": "libs/user/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/user/tsconfig.lib.json"
       }
     }
   }

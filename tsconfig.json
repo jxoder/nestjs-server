@@ -30,9 +30,7 @@
       "@slibs/redis": ["libs/redis/src"],
       "@slibs/redis/*": ["libs/redis/src/*"],
       "@slibs/testing": ["libs/testing/src"],
-      "@slibs/testing/*": ["libs/testing/src/*"],
-      "@slibs/user": ["libs/user/src"],
-      "@slibs/user/*": ["libs/user/src/*"]
+      "@slibs/testing/*": ["libs/testing/src/*"]
     }
   },
   "exclude": ["node_modules", "dist", "eslint.config.ts"]
